@@ -1,0 +1,3 @@
+{
+ "DB_URI" : "mongodb://sarra:sarra@localhost/events_db"
+}
