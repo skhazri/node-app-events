@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "4"
+services:
+- mongodb
 install: npm install
 test: npm test
 cache:
