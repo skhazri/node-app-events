@@ -5,12 +5,14 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test --timeout 10000"
   },
   "author": "skhazti",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "4.0.0",
@@ -18,7 +20,19 @@
     "express": "4.15.4",
     "express-ejs-layouts": "2.3.1",
     "express-session": "^1.15.5",
-    "express-validator": "^4.1.0",
-    "mongoose": "4.11.9"
+    "mongoose": "4.11.9",
+    "morgan": "^1.8.2"
+  },
+  "devDependencies": {
+    "config": "^1.26.2",
+    "express-validator": "2.20.8",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "jshint": "^2.9.5",
+    "jshint-stylish": "^2.2.1",
+    "mocha": "^3.5.0"
   }
 }
