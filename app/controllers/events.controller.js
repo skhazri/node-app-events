@@ -5,8 +5,11 @@ module.exports = {
   showSingle: showSingle,
   seedEvents: seedEvents,
   showCreate: showCreate,
-  processCreate: processCreate
-}
+  processCreate: processCreate,
+  showEdit: showEdit,
+  processEdit: processEdit,
+  deleteEvent: deleteEvent
+};
 
 /**
  * Show all events
@@ -20,7 +23,10 @@ function showEvents(req, res) {
     }
 
     // return a view with data
-    res.render('pages/events', { events: events });
+    res.render('pages/events', {
+      events: events,
+      success: req.flash('success')
+    });
   });
 }
 
@@ -106,5 +112,63 @@ function processCreate(req, res) {
 
     // redirect to the newly created event
     res.redirect(`/events/${event.slug}`);
+  });
+}
+
+/**
+ * Show the edit form
+ */
+function showEdit(req, res) {
+  Event.findOne({ slug: req.params.slug }, (err, event) => {
+    res.render('pages/edit', {
+      event: event,
+      errors: req.flash('errors')
+    });
+  });
+}
+
+/**
+ * Process the edit form
+ */
+function processEdit(req, res) {
+  // validate information
+  req.checkBody('name', 'Name is required.').notEmpty();
+  req.checkBody('description', 'Description is required.').notEmpty();
+
+  // if there are errors, redirect and save errors to flash
+  const errors = req.validationErrors();
+  if (errors) {
+    req.flash('errors', errors.map(err => err.msg));
+    return res.redirect(`/events/${req.params.slug}/edit`);
+  }
+
+  // finding a current event
+  Event.findOne({ slug: req.params.slug }, (err, event) => {
+    // updating that event
+    event.name        = req.body.name;
+    event.description = req.body.description;
+
+    event.save((err) => {
+      if (err)
+        throw err;
+
+      // success flash message
+      // redirect back to the /events
+      req.flash('success', 'Successfully updated event.');
+      res.redirect('/events');
+    });
+  });
+
+}
+
+/**
+ * Delete an event
+ */
+function deleteEvent(req, res) {
+  Event.remove({ slug: req.params.slug }, (err) => {
+    // set flash data
+    // redirect back to the events page
+    req.flash('success', 'Event deleted!');
+    res.redirect('/events');
   });
 }

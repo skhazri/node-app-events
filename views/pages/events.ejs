@@ -2,7 +2,9 @@
     <h1>All Events</h1>
 </div>
 
-
+<% if (success.length > 0) { %>
+    <div class="alert alert-success"><%= success %></div>
+<% } %>
 
 <table class="table table-bordered table-hover table-striped">
     <thead>

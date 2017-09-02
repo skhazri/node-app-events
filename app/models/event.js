@@ -1,25 +1,31 @@
 const mongoose = require('mongoose'),
-  schema = mongoose.Schema;
+  Schema = mongoose.Schema;
 
 // create a schema
-const eventSchema = new schema({
- name : String,
- slug: {
-  type: String,
-  unique: true
- },
- description : String
+const eventSchema = new Schema({
+  name: String,
+  slug: {
+    type: String,
+    unique: true
+  },
+  description: String
 });
-//middleware
+
+// middleware -----
+// make sure that the slug is created from the name
 eventSchema.pre('save', function(next) {
- this.slug = slugify(this.name);
- next();
+  this.slug = slugify(this.name);
+  next();
 });
+
 // create the model
 const eventModel = mongoose.model('Event', eventSchema);
+
 // export the model
-function slugify(text)
-{
+module.exports = eventModel;
+
+// function to slugify a name
+function slugify(text) {
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
@@ -27,4 +33,3 @@ function slugify(text)
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '');            // Trim - from end of text
 }
-module.exports = eventModel;
