@@ -11,9 +11,24 @@ const mongoose = require('mongoose'),
 
   describe('/GET EVENTS', () => {
     beforeEach((done) => {
-     event.remove({},(error) => {
-       done();
-     });
+    //  event.remove({},(error) => {
+    //    done();
+    //  });
+     console.log('before each called ');
+     done();
+    });
+    /*
+   * Test the /GET route
+   */
+    describe('/', () => {
+     it('it should test the server running ', (done) => {
+       chai.request(server)
+       .get('/')
+       .end((err, res) => {
+          res.should.have.status(200);
+          done();
+       });
+      });
     });
    /*
   * Test the /GET route
