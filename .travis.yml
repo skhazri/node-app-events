@@ -7,5 +7,4 @@ services:
 before_script:
   - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
   - sleep 15
-  - mongo mydb_test --eval 'db.addUser("travis", "test");'
 test: npm test
