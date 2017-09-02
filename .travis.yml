@@ -6,6 +6,6 @@ services:
   - mongodb
 before_script:
   - mongo events_db --eval 'db.createUser({user:"sarra",pwd:"sarra",roles:["readWrite"]});'
-  - mongo events_db --eval 'db.events.save({name:'Basketball',description:'Throwing into a basket.'});'
+  - mongo events_db --eval 'db.save({name:"sarra",description:"sarra"});'
   - sleep 15
 test: npm test
